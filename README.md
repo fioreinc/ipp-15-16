@@ -14,3 +14,6 @@ Be sure to run the installer as sudo, and leave the default installation directo
 After it is installed, use gksudo to run the program. It won't work unless you run it as root.
 
 ## Installing Arduino IDE
+Download the Arduino IDE from here:https://www.arduino.cc/en/Main/Software
+
+Add this library to the IDE: https://github.com/bogde/HX711
