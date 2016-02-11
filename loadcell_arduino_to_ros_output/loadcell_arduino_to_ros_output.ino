@@ -1,3 +1,17 @@
+// We will want to create a msg that contains a string primitive
+// and the field type Float64. Example shown below:
+/*  string first_name
+ *  string last_name 
+ *  float64 loadcell_data 
+ *  
+ */
+// ROS allows us to use other msg files as a field type within a msg. 
+// The previous iteration of the project used the 'ForceSensors' msg (consists of uints for each
+// of the flexiforce sensors) as a field type for the Gripper output msg.
+// Then within arduino we will have the following header:
+// (name_of_ros_msg):: Float64 loadcell_data;
+// (name_of_ros_msg):: String first_name;
+
 #include <ros.h>
 #include <HX711.h>
 #include <std_msgs/Float64.h>
