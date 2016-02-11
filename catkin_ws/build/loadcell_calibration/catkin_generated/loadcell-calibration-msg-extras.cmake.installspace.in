@@ -1,0 +1,2 @@
+set(loadcell-calibration_MESSAGE_FILES "")
+set(loadcell-calibration_SERVICE_FILES "srv/GetFactor.srv")
