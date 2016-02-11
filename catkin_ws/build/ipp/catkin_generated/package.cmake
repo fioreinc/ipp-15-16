@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "ipp")
-set(ipp_MAINTAINER "Edward Hietter <ethietter@gmail.com>, Eric Watson <ewats13@unm.edu>, Vincent Woods <vdub32@unm.edu>")
-set(ipp_DEPRECATED "")
-set(ipp_VERSION "0.0.0")
-set(ipp_BUILD_DEPENDS "std_msgs" "rospy" "roscpp")
-set(ipp_RUN_DEPENDS )
-set(ipp_BUILDTOOL_DEPENDS "catkin")

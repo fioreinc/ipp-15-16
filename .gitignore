@@ -1,0 +1,4 @@
+#Ignore the workspace-specific catkin directories
+catkin_ws/build
+catkin_ws/devel
+catkin_ws/install

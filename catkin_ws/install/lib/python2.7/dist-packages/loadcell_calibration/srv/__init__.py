@@ -1,1 +1,0 @@
-from ._GetFactor import *

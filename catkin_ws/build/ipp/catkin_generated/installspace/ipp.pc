@@ -1,8 +1,0 @@
-prefix=/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/install
-
-Name: ipp
-Description: Description of ipp
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/install/lib 
-Requires: 
