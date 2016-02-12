@@ -1,0 +1,4 @@
+float64 lbs_reading
+---
+float64 factor
+bool is_done

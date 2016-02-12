@@ -1,0 +1,8 @@
+prefix=/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/install
+
+Name: helloworld
+Description: Description of helloworld
+Version: 0.0.0
+Cflags: -I/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/install/include
+Libs: -L/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/install/lib 
+Requires: 

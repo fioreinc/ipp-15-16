@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "loadcell_calibration")
+set(loadcell_calibration_MAINTAINER "Edward Hietter <ethietter@gmail.com>")
+set(loadcell_calibration_DEPRECATED "")
+set(loadcell_calibration_VERSION "0.0.0")
+set(loadcell_calibration_BUILD_DEPENDS "rospy" "std_msgs" "message_generation" "rosserial_client" "rosserial_arduino")
+set(loadcell_calibration_RUN_DEPENDS "rospy" "std_msgs" "message_runtime")
+set(loadcell_calibration_BUILDTOOL_DEPENDS "catkin")
