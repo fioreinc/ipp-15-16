@@ -1,0 +1,8 @@
+prefix=/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/devel
+
+Name: loadcell_calibration
+Description: Description of loadcell_calibration
+Version: 0.0.0
+Cflags: -I/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/devel/include
+Libs: -L/home/ethietter/fiore-ipp/ipp-15-16/catkin_ws/devel/lib 
+Requires: 
