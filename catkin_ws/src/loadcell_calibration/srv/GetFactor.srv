@@ -1,4 +1,3 @@
-float64 lbs_reading
+float64 test_weight
 ---
-float64 factor
 bool is_done
