@@ -27,6 +27,7 @@ void loop(){
         }
     }
     */
+    /*
     char c;
     if(Serial.available() > 0){
         c = Serial.read();
@@ -38,4 +39,9 @@ void loop(){
         }
         Serial.print(c);
     }
+    */
+    while(1){
+        Serial.print("Dogs\n");
+    }
+
 }

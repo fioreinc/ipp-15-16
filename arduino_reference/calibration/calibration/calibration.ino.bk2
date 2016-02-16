@@ -6,7 +6,7 @@ HX711 scale(DOUT, CLK);
 
 float calibration_factor = -7050; //-7050 worked for my 440lb max scale setup
 float weight = 5.0;
-float threshold = .5;
+float threshold = .1;
 
 enum states_e{
     AWAITING_CMD,
@@ -18,9 +18,17 @@ enum states_e curr_state;
 
 
 void get_calibration() {
+    /*
+    scale.set_scale();
+    scale.tare();  //Reset the scale to 0
+
+    //long zero_factor = scale.read_average(); //Get a baseline reading
+    //Serial.print("Zero factor: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
+    //Serial.println(zero_factor);
+
     while (true) {
         scale.set_scale(calibration_factor); //Adjust to this calibration factor
-        float measured = fabs(scale.get_units());
+        float measured = abs(scale.get_units());
         if ( abs(measured - weight) < threshold) {
             break;
         }
@@ -32,26 +40,28 @@ void get_calibration() {
                 calibration_factor -= 10;
             }
         }
+        Serial.println(measured);
     }
-    Serial.print("Calibration Factor Found: ");
-    Serial.println(calibration_factor);
+    */
 }
 
 void read_data(){
-  Serial.print(fabs(scale.get_units()), 3);           //absolute value of reading
-  Serial.print(" lbs\n");
+  Serial.print(abs(scale.get_units()), 10);           //absolute value of reading
+  Serial.print(" lbs");
 }
 
 void execute_cmd(){
+    Serial.print("DOGS");
+    /*
     const char start_char = '[';
     const char end_char = ']';
     char c;
     String cmd = "";
-    while(!Serial.available()); //Wait until there is data available
+    while(!Serial.available()) Serial.print("Waiting\n"); //Wait until there is data available
     while(Serial.read() != start_char); //Ignore all characters that aren't the start char
     while(1){ //Read until we reach the end char
         if(Serial.available()){
-            if((c = Serial.read()) != end_char){
+            if((c = Serial.read() != end_char)){
                 cmd += c;
             }
             else{
@@ -61,30 +71,31 @@ void execute_cmd(){
     }
 
     if(cmd == "init_scale"){
-        Serial.println("Searching for calibration factor");
+        Serial.println("Finding calibration factor");
         get_calibration();
+        Serial.println("Calibration factor found");
+        Serial.println("Awaiting next command");
     }
+
     if(cmd == "read_data"){
         curr_state = READING_DATA;
     }
-    if(cmd == "tare_scale"){
-        tare_scale();
-    }
-        
+    */
 
-}
-
-void tare_scale(){
-    scale.set_scale();
-    scale.tare();  //Reset the scale to 0
 }
 
 void setup() {
+
     //Set up the serial port baud rate
-    Serial.begin(9600);
     curr_state = AWAITING_CMD;
-    tare_scale();
-    Serial.println("[ready]");
+    Serial.begin(9600);
+    //Serial.println("HX711 calibration sketch");
+    //Serial.println("Remove all weight from scale");
+    //Serial.println("After readings begin, place known weight on scale");
+    //Serial.println("Press + to increase calibration factor");
+    //Serial.println("Press - to decrease calibration factor");
+
+
 }
 
 
