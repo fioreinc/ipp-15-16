@@ -30,11 +30,8 @@ void get_calibration() {
 void setup() {
 
   Serial.begin(9600);
-  Serial.println("HX711 calibration sketch");
-  Serial.println("Remove all weight from scale");
-  Serial.println("After readings begin, place known weight on scale");
-  Serial.println("Press + to increase calibration factor");
-  Serial.println("Press - to decrease calibration factor");
+  Serial.println("Load Cell Calibration Sketch");
+  Serial.println("Place a known weight on scale");
 
   scale.set_scale();
   scale.tare();  //Reset the scale to 0
@@ -54,4 +51,5 @@ void loop() {
   Serial.print("Reading: ");
   Serial.print(abs(scale.get_units()), 10);           //absolute value of reading
   Serial.print(" lbs");
+  Serial.println();
 }
