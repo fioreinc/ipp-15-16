@@ -46,9 +46,9 @@ When writing Arduino Sketches, communication with the XBee works over the hardwa
 
 On the shield, there is a switch that can be in either "DLINE" or "UART" mode. DLINE mode means that the XBee's RX and TX pins are set to free pins on the Arduino, namely 2 and 3. This is where you would use the SoftwareSerial library if the MEGA supported it for pins 2 and 3.  Since it doesn't, the switch will need to be in UART mode (RX and TX connected to pins 0 and 1, the Hardware Serial I/O pins) for the XBee to receive data.
 
-*CAUTION:* Be sure the switch is in DLINE mode when uploading sketches to the Arduino. Otherwise the (potentially harmful) data will be sent to the XBee as well as the Arduino.
+__CAUTION: Be sure the switch is in DLINE mode when uploading sketches to the Arduino. Otherwise the (potentially harmful) data will be sent to the XBee as well as the Arduino.__
 
-## Sending data from computer-connected XBee to Arduino-connected XBee
+### Sending data from computer-connected XBee to Arduino-connected XBee
 1. Open Console Mode in XCTU (top right)
 2. Click the "Open" button in the top left of the console area. This opens up the communication channel between XBees
 3. In the "Send Frames" area, click the plus sign and then click "Create Frame using 'Frames Generator' Tool"
