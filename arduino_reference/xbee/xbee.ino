@@ -31,12 +31,20 @@ char convertCase(char c){
 
 void loop()
 {
+ /*
     char c;
     while (Serial.available() > 0) {
         c = Serial.read();
         c = convertCase(c);
         Serial.write(c);
-    }
+   }
+
+ */
+
+    Serial.println("I see you");
+    delay(500);
+    
+   
 /*
     if(data_received){
         blink();

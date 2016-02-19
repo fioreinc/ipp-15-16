@@ -13,7 +13,6 @@ void setup() {
 /* Average the analog reading to eliminate some of the noise.
    Then convert the analog reading to a voltage, and return voltage. */
 
-
 void move_servo() {
 
   int pos = 0;
@@ -23,19 +22,17 @@ void move_servo() {
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(15);                       // waits 15ms for the servo to reach the position
   }
+
   for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(15);                       // waits 15ms for the servo to reach the position
   }
-
 }
-
 
 float averageAnalog(int pin) {
   float v = 0.0;
   for (int i = 0; i < 5; i++) v += analogRead(pin);
   return (v / 5) * (5.0 / 1023.0);
-
 }
 
 void loop() {
@@ -45,7 +42,7 @@ void loop() {
   Serial.print(curr_reading);
   Serial.println(" volts");
 
-  if(curr_reading > 3){
+  if(curr_reading > 2.0){
     is_moving = 0;
   }
 
@@ -74,7 +71,7 @@ void loop() {
     Serial.print("A5 : ");
     Serial.print(averageAnalog(5));
     Serial.println(" lbs");
-
   */
+
   delay(200);        // delay in between reads (200 milliseconds)
 }
