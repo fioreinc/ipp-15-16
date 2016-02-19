@@ -1,6 +1,9 @@
 // 2/18/2016 Tested successfully with one individual flexiforce sensor
 #include <Servo.h>
 
+#define MAX_POS 180
+#define MIN_POS 0
+
 int is_moving = 1;
 Servo myservo;
 
@@ -10,24 +13,42 @@ void setup() {
   myservo.attach(9);
 }
 
+int pos = 0;
+
+//Moves gradually towards the provided depth, where depth ranges from 0-1.
+//1 is fully gripped
+//0 is fully released
+//Returns 1 if we have reached the targeted grip depth
+int gripTo(float depth, int speed){
+    if(depth > 1) depth = 1;
+    if(depth < 0) depth = 0;
+    int target_pos = depth*(MAX_POS - MIN_POS) + MIN_POS;
+
+    int bounced = 1; //Boolean tracking if it was above and below the target in one interation. If so, we're at the target
+    if(pos < target_pos){
+        pos += speed;
+        bounced = !bounced;
+    }
+    if(pos > target_pos){
+        pos -= speed;
+        bounced = !bounced;
+    }
+    if(bounced){
+        pos = target_pos;
+    }
+    Serial.println(pos);
+
+    if(pos == target_pos){
+        return 1;
+    }
+
+    myservo.write(pos);
+    return 0;
+
+}
+
 /* Average the analog reading to eliminate some of the noise.
    Then convert the analog reading to a voltage, and return voltage. */
-
-void move_servo() {
-
-  int pos = 0;
-
-  for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
-  }
-
-  for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
-  }
-}
 
 float averageAnalog(int pin) {
   float v = 0.0;
@@ -35,43 +56,23 @@ float averageAnalog(int pin) {
   return (v / 5) * (5.0 / 1023.0);
 }
 
+float grips[] = {.5, .3, .9, 0, 1, .4, .8, .2, .7};
+int grips_len = 9;
+int curr_grip = 0;
+int speed = 3;
+
 void loop() {
 
-  float curr_reading = averageAnalog(0);
-  Serial.print("A0 : ");
-  Serial.print(curr_reading);
-  Serial.println(" volts");
-
-  if(curr_reading > 2.0){
-    is_moving = 0;
-  }
-
-  if (is_moving){
-
-    move_servo();
-  }
-
-  /*
-    Serial.print("A1 : ");
-    Serial.print(averageAnalog(1));
-    Serial.println(" lbs");
-
-    Serial.print("A2 : ");
-    Serial.print(averageAnalog(2));
-    Serial.println(" lbs");
-
-    Serial.print("A3 : ");
-    Serial.print(averageAnalog(3));
-    Serial.println(" lbs");
-
-    Serial.print("A4 : ");
-    Serial.print(averageAnalog(4));
-    Serial.println(" lbs");
-
-    Serial.print("A5 : ");
-    Serial.print(averageAnalog(5));
-    Serial.println(" lbs");
-  */
-
-  delay(200);        // delay in between reads (200 milliseconds)
+    //float curr_reading = averageAnalog(0);
+    //Serial.print("A0 : ");
+    //Serial.print(curr_reading);
+    //Serial.println(" volts");
+   
+    Serial.println(grips[curr_grip]);
+    while(!gripTo(grips[curr_grip], speed));
+    delay(1000);
+    curr_grip++;
+    if(curr_grip > grips_len){
+        while(1);//Spin
+    }
 }
