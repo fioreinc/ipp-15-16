@@ -5,7 +5,7 @@
 
 #define PIN_PRESSURE 0
 
-#define NUM_SERVOS 4
+#define NUM_SERVOS 5
 #define SERVO_BASE_PIN 5
 
 int is_moving = 1;
@@ -24,53 +24,58 @@ void init_servo_obj(ServoObj* servo_obj, int pin){
     servo_obj->pos = 0;
 }
 
-void setup() {
-    Serial.begin(9600);
+void init_servos(){
     for(int i = 0; i < NUM_SERVOS; i++){
         int pin = SERVO_BASE_PIN + i;
         init_servo_obj(&servos[i], pin);
     }
-
+    /*
     for(int i = 0; i < NUM_SERVOS; i++){
         Serial.println(servos[i].obj->attached());
     }
+    */
 }
 
+void setup() {
+    Serial.begin(9600);
+    init_servos();
+}
 
-/*
- * float        depth   Target depth to turn towards. Ranges from 0-1 where 1 is fully gripped and 0 is fully relaxed
- * int          speed   Speed at which to head towards the target, in tenths of degrees per millisecond
- * ServoObj*    servo   Pointer to the ServoObj that we're trying to control
- *
- * return       boolean indicating whether or not the servo has reached the target
-*/
-int grip_to(float depth, int speed, ServoObj* servo){
+int internal_grip_to(float depth, int speed, ServoObj* servo){
     if(depth > 1) depth = 1;
     if(depth < 0) depth = 0;
     int target_pos = depth*(MAX_POS - MIN_POS) + MIN_POS;
 
-    int bounced = 1; //Boolean tracking if it was above and below the target in one iteration. If so, we're at the target
     if(servo->pos < target_pos){
-        servo->pos += speed;
-        bounced = !bounced;
+        servo->pos++;
     }
     if(servo->pos > target_pos){
-        servo->pos -= speed;
-        bounced = !bounced;
+        servo->pos--;
     }
-    if(bounced){
-        servo->pos = target_pos;
-    }
-    delay(10);
 
-
-    if(servo->pos == target_pos){
-        return 1;
-    }
 
     servo->obj->write(servo->pos);
-    return 0;
 
+    return (servo->pos == target_pos);
+}
+
+/*
+ * float        depth   Target depth to turn towards. Ranges from 0-1 where 1 is fully gripped and 0 is fully relaxed
+ * int          speed   Speed ranges from 1 to 10
+ * ServoObj*    servo   Pointer to the ServoObj that we're trying to control
+ *
+ * return       boolean indicating whether or not the servo has reached the target
+*/
+int grip_to(float depth[], int speed, ServoObj servo[NUM_SERVOS], int results[NUM_SERVOS]){
+    for(int i = 0; i < NUM_SERVOS; i++){
+        results[i] = internal_grip_to(depth[i], speed, &servo[i]);
+    }
+
+    if(speed < 1) speed = 1;
+    if(speed > 10) speed = 10;
+
+    float min_delay = 11; //ms
+    delay(min_delay*10/speed);
 }
 
 /* Average the analog reading to eliminate some of the noise.
@@ -92,18 +97,32 @@ void readXBee(){
     }
 }
 
-float target = 1;
+float target[5] = {1, 1, 1, 1, 1};
+
+float target_voltage = 4;
+int reached_target_voltage = 0;
 
 void loop() {
-    int speed = 1;
-    for(int i = 0; i < NUM_SERVOS; i++){
-        while(!grip_to(target, speed, &servos[i]));
+    int speed = 10;
+    float sensor_val = average_analog(0);
+    float sensor_val2 = average_analog(1);
+
+    if(sensor_val >= target_voltage || sensor_val2 >= target_voltage){
+        reached_target_voltage = 1;
     }
 
-    if(target == 1){
-        target = 0;
-    }
-    else{
-        target = 1;
+    if(!reached_target_voltage){
+        int result[NUM_SERVOS];
+        grip_to(target, speed, servos, result);
+        for(int i = 0; i < NUM_SERVOS; i++){
+            if(result[i]){
+                if(target[i] == 0){
+                    target[i] = 1;
+                }
+                else {
+                    target[i] = 0;
+                }
+            }
+        }
     }
 }
