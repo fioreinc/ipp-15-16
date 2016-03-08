@@ -6,11 +6,13 @@
 
 int is_moving = 1;
 Servo myservo;
+//Servo myservo2;
 
 void setup() {
 
   Serial.begin(9600);
   myservo.attach(9);
+//  myservo2.attach(8);
 }
 
 int pos = 0;
@@ -41,8 +43,9 @@ int gripTo(float depth, int speed){
     if(pos == target_pos){
         return 1;
     }
-
+    
     myservo.write(pos);
+//    myservo2.write(pos);
     return 0;
 
 }
