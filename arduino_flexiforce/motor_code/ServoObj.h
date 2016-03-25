@@ -6,7 +6,7 @@
 class ServoObj{
 
     public:
-        ServoObj();
+        ServoObj(int pin);
         Servo* obj;
         int pos;
 };

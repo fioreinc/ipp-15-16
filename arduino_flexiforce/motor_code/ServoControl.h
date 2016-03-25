@@ -15,13 +15,11 @@
 class ServoControl{
     ServoObj* servos[NUM_SERVOS];
 
-    void initServoObj(ServoObj* servo_obj, int pin);
     int internalGripTo(float depth, int speed, ServoObj* servo);
 
 
     public:
         ServoControl();
-        void initServos();
         void gripTo(float depth[NUM_SERVOS], int speed, int results[NUM_SERVOS]);
 };
 

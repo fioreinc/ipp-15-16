@@ -1,22 +1,10 @@
 #include "ServoControl.h"
 
 ServoControl::ServoControl(){
-    this->initServos();
-}
-
-void ServoControl::initServos(){
     for(int i = 0; i < NUM_SERVOS; i++){
-        servos[i] = new ServoObj();
         int pin = SERVO_BASE_PIN + i;
-        this->initServoObj(servos[i], pin);
+        servos[i] = new ServoObj(pin);
     }
-}
-
-void ServoControl::initServoObj(ServoObj* servo_obj, int pin){
-    servo_obj->obj = new Servo;
-    servo_obj->obj->attach(pin);
-    servo_obj->obj->write(0);
-    servo_obj->pos = 0;
 }
 
 /*

@@ -1,30 +1,15 @@
 #include <Servo.h>
 #include "ServoControl.h"
+#include "SensorControl.h"
 
 
-#define PIN_PRESSURE 0
-
-#define NUM_SENSORS 5
-#define SENSOR_BASE_PIN 0
-
-int is_moving = 1;
-
-ServoControl* srv_control;
+ServoControl* servo_control;
+SensorControl* sensor_control;
 
 void setup() {
     Serial.begin(9600);
-    srv_control = new ServoControl();
-}
-
-/* Average the analog reading to eliminate some of the noise.
-   Then convert the analog reading to a voltage, and return voltage. */
-float average_analog(int pin) {
-    float v = 0.0;
-    int iterations = 5;
-    for (int i = 0; i < iterations; i++){
-        v += analogRead(pin);
-    }
-    return (v / iterations) * (5.0 / 1023.0);
+    servo_control = new ServoControl();
+    sensor_control = new SensorControl();
 }
 
 void readXBee(){
@@ -43,9 +28,10 @@ int reached_target_voltage = 0;
 void loop() {
     int speed = 5;
     //Read all of the sensors, and if any of them are > target voltage, stop
-    for(int i = SENSOR_BASE_PIN; i < SENSOR_BASE_PIN + NUM_SERVOS; i++){
-        float reading = average_analog(i);
-        if(reading >= target_voltage){
+    float result[NUM_SENSORS];
+    sensor_control->readAll(result);
+    for(int i = 0; i < NUM_SENSORS; i++){
+        if(result[i] >= target_voltage){
             reached_target_voltage = 1;
             Serial.print("Voltage threshold reached on pin: ");
             Serial.print(reached_target_voltage);
@@ -55,7 +41,7 @@ void loop() {
 
     if(!reached_target_voltage){
         int result[NUM_SERVOS];
-        srv_control->gripTo(target, speed, result);
+        servo_control->gripTo(target, speed, result);
         for(int i = 0; i < NUM_SERVOS; i++){
             if(result[i]){
                 if(target[i] == 0){
