@@ -1,13 +1,14 @@
-#include <Servo.h>
 #include "ServoControl.h"
 #include "SensorControl.h"
+#include "SerialComm.h"
 
 
 ServoControl* servo_control;
 SensorControl* sensor_control;
+SerialComm* serial_comm;
 
 void setup() {
-    Serial.begin(9600);
+    serial_comm = new SerialComm();
     servo_control = new ServoControl();
     sensor_control = new SensorControl();
 }
