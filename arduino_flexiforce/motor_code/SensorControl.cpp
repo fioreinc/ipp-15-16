@@ -16,7 +16,7 @@ float SensorControl::readSingle(int index){
 
 void SensorControl::readAll(float results[NUM_SENSORS]){
     for(int i = SENSOR_BASE_PIN; i < SENSOR_BASE_PIN + NUM_SENSORS; i++){
-        results[i] = this->averageAnalog(i);
+        results[i - SENSOR_BASE_PIN] = this->averageAnalog(i);
     }
 }
 

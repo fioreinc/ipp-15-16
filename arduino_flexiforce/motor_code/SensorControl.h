@@ -2,7 +2,7 @@
 #define SENSOR_CONTROL_H
 
 #define NUM_SENSORS 5
-#define SENSOR_BASE_PIN 0
+#define SENSOR_BASE_PIN 8
 
 #include "SensorObj.h"
 #include <Arduino.h>

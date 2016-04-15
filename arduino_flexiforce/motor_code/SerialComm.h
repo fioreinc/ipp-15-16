@@ -1,6 +1,8 @@
 #ifndef SERIAL_COMM_H
 #define SERIAL_COMM_H
 
+#define CMD_MAX_LEN 64
+
 #include <Arduino.h>
 
 class SerialComm{
@@ -8,8 +10,9 @@ class SerialComm{
     public:
         SerialComm();
 
-        String getBlockingCmd();
-        void sendString(String str);
+        //void sendString(String str);
+        int getCmdIfAvailable(String &cmd);
+
 };
 
 #endif

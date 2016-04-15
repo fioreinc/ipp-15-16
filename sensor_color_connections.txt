@@ -1,0 +1,7 @@
+This document explains which color wires correspond to signal and power for each sensor.
+
+Index Finger:
+    Signal: Yellow
+    Power: Red
+
+
