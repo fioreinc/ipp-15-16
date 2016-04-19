@@ -21,7 +21,7 @@ void readXBee(){
     }
 }
 
-float target[NUM_SERVOS] = {.5, .7, .7, .7, .7};
+float target[NUM_SERVOS] = {.5, .9, .9, .9, .9};
 
 float target_voltage = .40;
 int reached_target_voltage = 0;
@@ -73,6 +73,7 @@ void loop() {
     if(!reached_target_voltage){
         int result[NUM_SERVOS];
         servo_control->gripTo(target, speed, result);
+        /*
         for(int i = 1; i < NUM_SERVOS; i++){
             if(result[i]){
                 if(target[i] == .7){
@@ -83,5 +84,6 @@ void loop() {
                 }
             }
         }
+        */
     }
 }
