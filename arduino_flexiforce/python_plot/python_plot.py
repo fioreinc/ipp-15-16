@@ -30,20 +30,26 @@ with open (file_name) as f:
 	ring_val = float_list[4::6]		# ring finger readings
 	pinky_val = float_list[5::6]		# pinky readings
 
-# Print the plot's color 'key' to the command line, for user reference
-print ("Python Plot Color Key")
-print("Thumb:  RED")
-print("Index:  BLUE")
-print("Middle: GREEN")
-print("Ring:   MAGENTA")
-print("Pinky:  BLACK")
 
 plt.title("Sensor Data Plot: %s" % test_case)	# plot title
 plt.xlabel('Time (milliseconds)')		# label x axis
 plt.ylabel('Sensor Measurements (volts)')	# label y axis 
-plt.plot(time_val,thumb_val,'r-')		# plot thumb in red	
-plt.plot(time_val,index_val, 'b-')		# plot index in blue
-plt.plot(time_val,middle_val,'g-')		# plot middle in green
-plt.plot(time_val,ring_val,'m-')		# plot ring in magenta
-plt.plot(time_val,pinky_val,'k-')		# plot pinky in black
+plt.plot(time_val,thumb_val,'r-',label='Thumb')	# plot thumb in red	
+plt.plot(time_val,index_val, 'b-',label='Index')# plot index in blue
+plt.plot(time_val,middle_val,'g-',label='Middle')# plot middle in green
+plt.plot(time_val,ring_val,'m-',label='Ring')	# plot ring in magenta
+plt.plot(time_val,pinky_val,'k-',label='Pinky')	# plot pinky in black
+
+# Create legend with colors labeled
+legend = plt.legend(loc='upper left', shadow=True)
+frame = legend.get_frame()
+frame.set_facecolor('0.90')
+
+# Set legend font size
+for label in legend.get_texts():
+	label.set_fontsize('large')
+# Set legend line width
+for label in legend.get_lines():
+	label.set_linewidth(1.5)
+
 plt.show()
