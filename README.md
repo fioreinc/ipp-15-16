@@ -87,5 +87,5 @@ Open `motor_code.ino` within Arduino IDE, and upload to Arduino MEGA microcontro
  The Arduino Sketch `motor_code.ino` outputs the time elapsed (in milliseconds) and the voltage readings from each pressure sensor to the serial monitor. This data can then be exported to a text file for plotting with Python.
 
 The data in the output text file is formatted line by line as follows: 
-<time>, <thumb sensor>, <index sensor>, <middle finger sensor>, <ring finger sensor>, <pinky sensor>
+```<time>, <thumb sensor>, <index sensor>, <middle finger sensor>, <ring finger sensor>, <pinky sensor>```
 This python program opens a specified text file, parses the values in an organized manner, and plots them with Matplotlib's Pyplot.
