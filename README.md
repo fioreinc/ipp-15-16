@@ -59,11 +59,11 @@ __CAUTION: Be sure the switch is in DLINE mode when uploading sketches to the Ar
 
 This data can be read on the Arduino using the standard Serial.available() and Serial.read() function calls. Remember to place the switch in UART mode after the sketch has been uploaded and you want to read data from the XBee.
 
-## Controlling the Robotic Hand
+# Controlling the Robotic Hand
 
 Open `motor_code.ino` within Arduino IDE, and upload to Arduino MEGA microcontroller. Ensure that under the "Tools" toolbar you have selected the correct Board and Port for your microcontroller. Once uploaded, open the Serial Monitor and turn on the power to the motors. The Serial Monitor accepts user input and allows you to send several commands to control the robotic hand. Once a command has been entered the hand will act accordingly, and time and sensor data will be outputted to the serial monitor.
 
-### Commands
+## Commands
 - `openclose` - Close all digits of the hand 80%, then open again.
 - `reset`     - Reset the position of all motors to 0. This command can be used to halt the execution of other commands.
 - `gripCoke`  - Grip 12oz Coke can with predetermined threshold for sensors.
